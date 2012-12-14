@@ -115,3 +115,5 @@ if (drupal_is_front_page()) {
   drupal_add_js(drupal_get_path('theme', 'best_responsive') . '/js/flexslider-min.js');
   drupal_add_js(drupal_get_path('theme', 'best_responsive') . '/js/slide.js');
 }
+
+

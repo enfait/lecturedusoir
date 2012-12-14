@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the LDS Article Feature feature.
+ */
+
+include_once 'lds_article_feature.features.inc';

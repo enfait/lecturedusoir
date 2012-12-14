@@ -3,6 +3,7 @@ description = Best Responsive is a premium Drupal 7 theme. Please consider a <a 
 core = 7.x
 engine = phptemplate
 stylesheets[all][] = style.css
+stylesheets[all][] = css/article.css
 stylesheets[all][] = css/responsive.css
 scripts[] = js/uniform.js
 scripts[] = js/superfish.js

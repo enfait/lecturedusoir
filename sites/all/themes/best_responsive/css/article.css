@@ -1,0 +1,35 @@
+.node-article.view-mode-full > .field-name-field-image {
+  float: left;
+}
+
+.node-article.view-mode-full > .field-name-field-author {
+  clear: both;
+  float: left;
+  margin-right: 1em;
+}
+
+.node-article.view-mode-full > .field-name-field-author  > .field-items > .field-item:after,
+.node-article.view-mode-full > .field-name-field-editor  > .field-items > .field-item:after,
+.node-article.view-mode-full > .field-name-field-release  > .field-items > .field-item:after
+{
+  content: "|";
+  margin-left: 1em;
+}
+
+.node-article.view-mode-full > .field-name-field-editor {
+  float: left;
+  margin-right: 1em;
+}
+
+.node-article.view-mode-full > .field-name-field-release {
+  float: left;
+  margin-right: 1em;
+}
+
+.node-article.view-mode-full > .field-name-note-starred {
+  float: left;
+}
+
+.node-article.view-mode-full > .field-name-field-tags {
+  clear: both;
+}
