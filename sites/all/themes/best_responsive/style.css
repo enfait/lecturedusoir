@@ -636,6 +636,19 @@ html[xmlns] .slides {
 /*main*/
 .flexslider-container {
   position: relative;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  height: 200px;
+   overflow: hidden;
+
+}
+
+.flexslider-container:hover {
+  height: 436px;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
 .flexslider {
