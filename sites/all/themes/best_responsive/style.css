@@ -1453,3 +1453,8 @@ border-left: 1px solid; border-right: 1px solid; height: 40px; margin-left: -36p
   font-size: 16px;
 }
 
+
+.field-name-post-date {
+	text-align: right;
+	font-size:0.9em;
+}

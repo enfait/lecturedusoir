@@ -33,3 +33,11 @@
 .node-article.view-mode-full > .field-name-field-tags {
   clear: both;
 }
+
+.field-name-field-articles .field-item:first-child {
+  clear: both;
+}
+
+.field-name-field-articles .field-item {
+  float: left;
+}
