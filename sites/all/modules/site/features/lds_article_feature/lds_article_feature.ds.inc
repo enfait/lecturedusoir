@@ -22,10 +22,15 @@ function lds_article_feature_ds_field_settings_info() {
       'label' => 'inline',
       'format' => 'default',
     ),
-    'title' => array(
-      'weight' => '0',
+    'links' => array(
+      'weight' => '9',
       'label' => 'hidden',
       'format' => 'default',
+    ),
+    'post_date' => array(
+      'weight' => '1',
+      'label' => 'hidden',
+      'format' => 'ds_post_date_teaser_date',
     ),
   );
   $export['node|article|default'] = $ds_fieldsetting;
@@ -51,6 +56,11 @@ function lds_article_feature_ds_field_settings_info() {
       'weight' => '4',
       'label' => 'hidden',
       'format' => 'default',
+    ),
+    'post_date' => array(
+      'weight' => '5',
+      'label' => 'hidden',
+      'format' => 'ds_post_date_teaser_date',
     ),
   );
   $export['node|article|teaser'] = $ds_fieldsetting;
@@ -108,25 +118,29 @@ function lds_article_feature_ds_layout_settings_info() {
   $ds_layout->settings = array(
     'regions' => array(
       'ds_content' => array(
-        0 => 'title',
-        1 => 'field_image',
+        0 => 'field_image',
+        1 => 'post_date',
         2 => 'body',
         3 => 'field_author',
         4 => 'field_editor',
         5 => 'field_release',
         6 => 'note_starred',
-        7 => 'field_tags',
+        7 => 'field_articles',
+        8 => 'field_tags',
+        9 => 'links',
       ),
     ),
     'fields' => array(
-      'title' => 'ds_content',
       'field_image' => 'ds_content',
+      'post_date' => 'ds_content',
       'body' => 'ds_content',
       'field_author' => 'ds_content',
       'field_editor' => 'ds_content',
       'field_release' => 'ds_content',
       'note_starred' => 'ds_content',
+      'field_articles' => 'ds_content',
       'field_tags' => 'ds_content',
+      'links' => 'ds_content',
     ),
     'classes' => array(),
     'wrappers' => array(
@@ -153,6 +167,7 @@ function lds_article_feature_ds_layout_settings_info() {
         2 => 'body',
         3 => 'field_tags',
         4 => 'links',
+        5 => 'post_date',
       ),
     ),
     'fields' => array(
@@ -161,6 +176,7 @@ function lds_article_feature_ds_layout_settings_info() {
       'body' => 'ds_content',
       'field_tags' => 'ds_content',
       'links' => 'ds_content',
+      'post_date' => 'ds_content',
     ),
     'classes' => array(),
     'wrappers' => array(

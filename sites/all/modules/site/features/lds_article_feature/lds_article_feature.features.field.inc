@@ -52,6 +52,12 @@ function lds_article_feature_field_default_fields() {
           'type' => 'text_default',
           'weight' => '2',
         ),
+        'reference' => array(
+          'label' => 'hidden',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '2',
+        ),
         'teaser' => array(
           'label' => 'hidden',
           'module' => 'text',
@@ -79,6 +85,99 @@ function lds_article_feature_field_default_fields() {
         ),
         'type' => 'text_textarea_with_summary',
         'weight' => '2',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-article-field_articles'.
+  $fields['node-article-field_articles'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_articles',
+      'foreign keys' => array(
+        'node' => array(
+          'columns' => array(
+            'target_id' => 'nid',
+          ),
+          'table' => 'node',
+        ),
+      ),
+      'indexes' => array(
+        'target_id' => array(
+          0 => 'target_id',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'entityreference',
+      'settings' => array(
+        'handler' => 'base',
+        'handler_settings' => array(
+          'behaviors' => array(
+            'views-select-list' => array(
+              'status' => 0,
+            ),
+          ),
+          'sort' => array(
+            'type' => 'none',
+          ),
+          'target_bundles' => array(
+            'article' => 'article',
+          ),
+        ),
+        'target_type' => 'node',
+      ),
+      'translatable' => '0',
+      'type' => 'entityreference',
+    ),
+    'field_instance' => array(
+      'bundle' => 'article',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'hidden',
+          'module' => 'entityreference',
+          'settings' => array(
+            'links' => 1,
+            'view_mode' => 'reference',
+          ),
+          'type' => 'entityreference_entity_view',
+          'weight' => '7',
+        ),
+        'reference' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '0',
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_articles',
+      'label' => 'Articles',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'entityreference',
+        'settings' => array(
+          'match_operator' => 'CONTAINS',
+          'path' => '',
+          'size' => '60',
+        ),
+        'type' => 'entityreference_autocomplete',
+        'weight' => '3',
       ),
     ),
   );
@@ -125,11 +224,17 @@ function lds_article_feature_field_default_fields() {
           'type' => 'text_default',
           'weight' => '3',
         ),
+        'reference' => array(
+          'label' => 'inline',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '3',
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '0',
+          'weight' => '15',
         ),
       ),
       'entity_type' => 'node',
@@ -147,7 +252,7 @@ function lds_article_feature_field_default_fields() {
           'size' => '60',
         ),
         'type' => 'text_textfield',
-        'weight' => '4',
+        'weight' => '5',
       ),
     ),
   );
@@ -194,11 +299,17 @@ function lds_article_feature_field_default_fields() {
           'type' => 'text_default',
           'weight' => '4',
         ),
+        'reference' => array(
+          'label' => 'inline',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '4',
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '0',
+          'weight' => '12',
         ),
       ),
       'entity_type' => 'node',
@@ -216,7 +327,7 @@ function lds_article_feature_field_default_fields() {
           'size' => '60',
         ),
         'type' => 'text_textfield',
-        'weight' => '5',
+        'weight' => '6',
       ),
     ),
   );
@@ -245,7 +356,7 @@ function lds_article_feature_field_default_fields() {
       'locked' => '0',
       'module' => 'image',
       'settings' => array(
-        'default_image' => FALSE,
+        'default_image' => 0,
         'uri_scheme' => 'public',
       ),
       'translatable' => '0',
@@ -264,7 +375,17 @@ function lds_article_feature_field_default_fields() {
             'image_style' => 'article-normal',
           ),
           'type' => 'image',
-          'weight' => '1',
+          'weight' => '0',
+        ),
+        'reference' => array(
+          'label' => 'hidden',
+          'module' => 'image',
+          'settings' => array(
+            'image_link' => 'content',
+            'image_style' => 'article-reference',
+          ),
+          'type' => 'image',
+          'weight' => '0',
         ),
         'teaser' => array(
           'label' => 'hidden',
@@ -307,7 +428,7 @@ function lds_article_feature_field_default_fields() {
           'progress_indicator' => 'throbber',
         ),
         'type' => 'media_generic',
-        'weight' => '3',
+        'weight' => '4',
       ),
     ),
   );
@@ -338,13 +459,19 @@ function lds_article_feature_field_default_fields() {
           'label' => 'inline',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '9',
+          'weight' => '18',
+        ),
+        'reference' => array(
+          'label' => 'inline',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '16',
         ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '13',
         ),
       ),
       'entity_type' => 'node',
@@ -363,7 +490,7 @@ function lds_article_feature_field_default_fields() {
         'module' => 'number',
         'settings' => array(),
         'type' => 'number',
-        'weight' => '7',
+        'weight' => '8',
       ),
     ),
   );
@@ -410,11 +537,17 @@ function lds_article_feature_field_default_fields() {
           'type' => 'text_default',
           'weight' => '5',
         ),
+        'reference' => array(
+          'label' => 'inline',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '5',
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '0',
+          'weight' => '14',
         ),
       ),
       'entity_type' => 'node',
@@ -432,7 +565,7 @@ function lds_article_feature_field_default_fields() {
           'size' => '60',
         ),
         'type' => 'text_textfield',
-        'weight' => '6',
+        'weight' => '7',
       ),
     ),
   );
@@ -482,6 +615,12 @@ function lds_article_feature_field_default_fields() {
           'module' => 'taxonomy',
           'settings' => array(),
           'type' => 'taxonomy_term_reference_link',
+          'weight' => '8',
+        ),
+        'reference' => array(
+          'label' => 'inline',
+          'settings' => array(),
+          'type' => 'hidden',
           'weight' => '7',
         ),
         'teaser' => array(
@@ -513,6 +652,7 @@ function lds_article_feature_field_default_fields() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Articles');
   t('Auteur');
   t('Body');
   t('Editeur');
