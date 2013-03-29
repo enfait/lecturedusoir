@@ -68,10 +68,10 @@
   <div id="header-wrap">
     <?php if (theme_get_setting('socialicon_display', 'best_responsive')): ?>
     <?php 
-    $twitter_url = theme_get_setting('twitter_url', 'best_responsive'); 
-    $facebook_url = theme_get_setting('facebook_url', 'best_responsive'); 
-    $google_plus_url = theme_get_setting('google_plus_url', 'best_responsive'); 
-    $pinterest_url = theme_get_setting('pinterest_url', 'best_responsive');
+    $twitter_url = check_plain(theme_get_setting('twitter_url', 'best_responsive')); 
+    $facebook_url = check_plain(theme_get_setting('facebook_url', 'best_responsive')); 
+    $google_plus_url = check_plain(theme_get_setting('google_plus_url', 'best_responsive')); 
+    $pinterest_url = check_plain(theme_get_setting('pinterest_url', 'best_responsive'));
     ?>
     <div id="pre-header" class="clearfix">
       <ul id="header-social" class="clearfix">
@@ -126,8 +126,6 @@
         <div id="single-post-slider" class="flexslider">
           <ul class="slides">
             <li class="slide"><img src="<?php print base_path() . drupal_get_path('theme', 'best_responsive') . '/images/slide-image-1.jpg'; ?>" alt="Slide"/></li>
-          <!--  <li class="slide"><img src="<?php print base_path() . drupal_get_path('theme', 'best_responsive') . '/images/slide-image-2.jpg'; ?>" alt="Slide"/></li> -->
-         <!--   <li class="slide"><img src="<?php print base_path() . drupal_get_path('theme', 'best_responsive') . '/images/slide-image-3.jpg'; ?>" alt="Slide"/></li> -->
           </ul><!-- /slides -->
         </div><!-- /flexslider -->
       </div>
