@@ -1,0 +1,16 @@
+name           = Twitter queue
+description    = This module allow you to create a queue list with tweets.
+package        = twitter
+core           = 7.x
+php            = 5.3
+configure      = admin/config/services/twitter_queue
+dependencies[] = oauth_common (>=7.x-3.0)
+tags[]         = social
+files[]        = twitter_queue.inc
+
+; Information added by drupal.org packaging script on 2012-08-25
+version = "7.x-1.0-beta3"
+core = "7.x"
+project = "twitter_queue"
+datestamp = "1345936117"
+

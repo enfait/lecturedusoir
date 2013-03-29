@@ -1,0 +1,15 @@
+name           = Twitter Queue Shorten URL
+description    = This module see your nodes when they comes public.
+package        = twitter
+core           = 7.x
+php            = 5.3
+dependencies[] = twitter_queue
+tags[]         = service
+files[]        = tq_shorten_url.inc
+
+; Information added by drupal.org packaging script on 2012-08-25
+version = "7.x-1.0-beta3"
+core = "7.x"
+project = "twitter_queue"
+datestamp = "1345936117"
+

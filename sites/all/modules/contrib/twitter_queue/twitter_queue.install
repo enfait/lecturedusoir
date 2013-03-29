@@ -1,0 +1,141 @@
+<?php
+
+/**
+ * @file
+ * Installation file.
+ */
+
+/**
+ * Implements hook_enable().
+ */
+function twitter_queue_enable() {
+  // Important thing. This file http://curl.haxx.se/ca/cacert.pem must be in
+  // the class/ folder so I'm gonna generate it.
+  $class_path = dirname(__FILE__) . '/class';
+  $cacert     = file_get_contents("http://curl.haxx.se/ca/cacert.pem");
+
+  if (drupal_chmod($class_path, 0777)) {
+    if (!file_put_contents($class_path . '/cacert.pem', $cacert)) {
+      drupal_set_message(t('The file cannot be saved. Please upload this file !link to this path @path', array('@path' => $class_path, '!link' => l(t('cacert.pem'), "http://curl.haxx.se/ca/cacert.pem"))), "warning");
+    }
+    else {
+      drupal_set_message(t('The file cacert.pem was saved successfuly.'));
+      drupal_chmod($class_path);
+    }
+  }
+  else {
+    drupal_set_message(t('The path @path cannot be set in writen mode. Please upload !link this file to this path @path', array('@path' => $class_path, '!link' => l(t('cacert.pem'), "http://curl.haxx.se/ca/cacert.pem"))), "warning");
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function twitter_queue_uninstall() {
+  $var_deteled =  db_delete('variable')
+  ->condition('name', 'twitter_queue_%', 'LIKE')
+  ->execute();
+
+  cache_clear_all('variables', 'cache');
+}
+
+/**
+ * Implements hook_schema().
+ */
+function twitter_queue_schema() {
+  $schema = array();
+
+  $schema['twitter_queue'] = array(
+    'description' => 'Queues table. Where the magic happen.',
+    'fields' => array(
+      'nid' => array(
+        'description' => 'nodes id. We need to keep it in varchar for fakes tweets.',
+        'type'        => 'varchar',
+        'length'      => 10,
+        'not null'    => TRUE,
+        'default'     => 0,
+      ),
+      'weight' => array(
+        'description' => 'Order in which tweets will be sent.',
+        'type'        => 'int',
+        'not null'    => TRUE,
+        'default'     => 0,
+        'size'        => 'tiny',
+      ),
+      'node_status' => array(
+        'description' => 'Node status.',
+        'type'        => 'int',
+        'unsigned'    => TRUE,
+        'not null'    => TRUE,
+        'default'     => 0,
+        'size'        => 'tiny',
+      ),
+      'text_status' => array(
+        'description' => 'Text status used in the tweet.',
+        'type'        => 'varchar',
+        'length'      => 140,
+        'not null'    => TRUE,
+        'default'     => '',
+      ),
+    ),
+    'indexes' => array(
+      'queue_weight'  => array('weight'),
+    ),
+    'unique keys' => array(
+      'nid' => array('nid'),
+    ),
+  );
+
+  $schema['twitter_queue_status'] = array(
+    'fields' => array(
+      'nid' => array(
+        'type'     => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default'  => 0,
+      ),
+      'status' => array(
+        'type'     => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default'  => 0,
+        'size'     => 'tiny',
+      ),
+    ),
+    'primary key' => array('nid'),
+  );
+
+  return $schema;
+}
+
+/**
+ * Generate the file cacert.pem for a full certification support.
+ */
+function twitter_queue_update_7101(&$sandbox) {
+  // Important thing. This file http://curl.haxx.se/ca/cacert.pem must be in
+  // the class/ folder so I'm gonna generate it.
+  $class_path = dirname(__FILE__) . '/class';
+  $cacert     = file_get_contents("http://curl.haxx.se/ca/cacert.pem");
+
+  if (!isset($sandbox['progress'])) {
+    $sandbox['progress'] = 0;
+    $sandbox['max']      = 1;
+  }
+
+  if (drupal_chmod($class_path, 0777)) {
+    if (!file_put_contents($class_path . '/cacert.pem', $cacert)) {
+      throw new DrupalUpdateException("The file cannot be saved. Please upload this file http://curl.haxx.se/ca/cacert.pem to this path {$class_path}");
+    }
+    else {
+      $sandbox['progress']++;
+      drupal_chmod($class_path);
+    }
+  }
+  else {
+    throw new DrupalUpdateException("The path {$class_path} cannot be set in writen mode. Please upload this file http://curl.haxx.se/ca/cacert.pem to this path {$class_path}");
+  }
+
+  $sandbox['#finished'] = $sandbox['progress'] / $sandbox['max'];
+
+  return t('The file cacert.pem was saved successfuly.');
+}

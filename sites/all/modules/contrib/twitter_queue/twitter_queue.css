@@ -1,0 +1,3 @@
+#totalchar {color: #c0c0c0; font-family: 'Georgia'; font-size: 1.9em; font-weight: 100; font-style: italic; position: absolute; top: 3.5ex; right: 6ex;}
+#edit-textarea.textOff {color: #C0C0C0; font-style: italic;}
+#edit-textarea.textOn{font-style: normal; color: #333;}
