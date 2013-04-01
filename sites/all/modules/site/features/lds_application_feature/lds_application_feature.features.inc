@@ -9,6 +9,10 @@
  */
 function lds_application_feature_ctools_plugin_api() {
   list($module, $api) = func_get_args();
+  if ($module == "ds" && $api == "ds") {
+    return array("version" => "1");
+  }
+  list($module, $api) = func_get_args();
   if ($module == "strongarm" && $api == "strongarm") {
     return array("version" => "1");
   }
@@ -24,7 +28,7 @@ function lds_application_feature_node_info() {
       'base' => 'node_content',
       'description' => t('Test d\'une application'),
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Titre'),
       'help' => '',
     ),
   );
