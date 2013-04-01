@@ -1,1 +1,18 @@
 <?php
+
+function lecturedusoir_site_update_7101(){
+
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node');
+  $query->entityCondition('bundle', 'article');
+  $res = $query->execute();
+
+  $nids = array_keys($res['node']);
+  foreach($nids as $nid){
+    $node = node_load($nid, NULL, TRUE);
+    $node->field_rating[LANGUAGE_NONE][0]['rating'] = 100 * ((int)$node->field_note[LANGUAGE_NONE][0]['value']) / 5;
+    node_save($node);
+
+  }
+
+}
