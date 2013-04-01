@@ -146,7 +146,7 @@ function lds_article_feature_field_default_fields() {
             'view_mode' => 'reference',
           ),
           'type' => 'entityreference_entity_view',
-          'weight' => '7',
+          'weight' => '8',
         ),
         'reference' => array(
           'label' => 'above',
@@ -459,7 +459,7 @@ function lds_article_feature_field_default_fields() {
           'label' => 'inline',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '18',
+          'weight' => '19',
         ),
         'reference' => array(
           'label' => 'inline',
@@ -491,6 +491,81 @@ function lds_article_feature_field_default_fields() {
         'settings' => array(),
         'type' => 'number',
         'weight' => '8',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-article-field_rating'.
+  $fields['node-article-field_rating'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_rating',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'fivestar',
+      'settings' => array(
+        'axis' => 'vote',
+      ),
+      'translatable' => '0',
+      'type' => 'fivestar',
+    ),
+    'field_instance' => array(
+      'bundle' => 'article',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'fivestar',
+          'settings' => array(
+            'expose' => TRUE,
+            'style' => 'average',
+            'text' => 'none',
+            'widget' => array(
+              'fivestar_widget' => 'default',
+            ),
+          ),
+          'type' => 'fivestar_formatter_default',
+          'weight' => '7',
+        ),
+        'reference' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_rating',
+      'label' => 'Rating',
+      'required' => 0,
+      'settings' => array(
+        'allow_clear' => 0,
+        'stars' => '5',
+        'target' => 'none',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'fivestar',
+        'settings' => array(
+          'widget' => array(
+            'fivestar_widget' => 'sites/all/modules/contrib/fivestar/widgets/hearts/hearts.css',
+          ),
+        ),
+        'type' => 'stars',
+        'weight' => '10',
       ),
     ),
   );
@@ -615,7 +690,7 @@ function lds_article_feature_field_default_fields() {
           'module' => 'taxonomy',
           'settings' => array(),
           'type' => 'taxonomy_term_reference_link',
-          'weight' => '8',
+          'weight' => '9',
         ),
         'reference' => array(
           'label' => 'inline',
@@ -660,6 +735,7 @@ function lds_article_feature_field_default_fields() {
   t('Note');
   t('Note sur 5');
   t('Parution');
+  t('Rating');
   t('Saisissez une liste de mots séparés par des virgules pour décrire votre contenu.');
   t('Tags');
   t('Transférer une image pour accompagner cet article.');
