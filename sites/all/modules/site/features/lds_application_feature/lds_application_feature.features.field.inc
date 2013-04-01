@@ -140,8 +140,8 @@ function lds_application_feature_field_default_fields() {
           'label' => 'hidden',
           'module' => 'entityreference',
           'settings' => array(
-            'links' => TRUE,
-            'view_mode' => '',
+            'links' => 0,
+            'view_mode' => 'reference',
           ),
           'type' => 'entityreference_entity_view',
           'weight' => '8',
@@ -291,7 +291,7 @@ function lds_application_feature_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
             'image_link' => '',

@@ -30,7 +30,7 @@
   float: left;
 }
 
-.node-article.view-mode-full > .field-name-field-tags {
+.node.view-mode-full > .field-name-field-tags {
   clear: both;
 }
 
