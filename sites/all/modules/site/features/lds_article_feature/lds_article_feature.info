@@ -1,6 +1,6 @@
 name = LDS Article Feature
 core = 7.x
-package = Features
+package = lecture du soir
 php = 5.2.4
 dependencies[] = ctools
 dependencies[] = ds

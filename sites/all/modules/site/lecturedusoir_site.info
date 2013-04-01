@@ -1,0 +1,7 @@
+name = lecture du soir (main module)
+core = 7.x
+package = lecture du soir
+dependencies[] = lds_application_feature
+dependencies[] = lds_article_feature
+features[features_api][] = api:1
+

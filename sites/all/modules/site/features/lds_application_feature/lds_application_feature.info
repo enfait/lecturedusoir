@@ -1,6 +1,6 @@
 name = LDS Application Feature
 core = 7.x
-package = Features
+package = lecture du soir
 dependencies[] = ctools
 dependencies[] = features
 dependencies[] = field_sql_storage
