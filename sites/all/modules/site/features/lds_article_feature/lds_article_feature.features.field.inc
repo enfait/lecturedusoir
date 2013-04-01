@@ -123,10 +123,7 @@ function lds_article_feature_field_default_fields() {
           'sort' => array(
             'type' => 'none',
           ),
-          'target_bundles' => array(
-            'application' => 'application',
-            'article' => 'article',
-          ),
+          'target_bundles' => array(),
         ),
         'target_type' => 'node',
       ),
