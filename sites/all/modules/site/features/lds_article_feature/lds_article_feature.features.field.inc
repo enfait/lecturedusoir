@@ -124,6 +124,7 @@ function lds_article_feature_field_default_fields() {
             'type' => 'none',
           ),
           'target_bundles' => array(
+            'application' => 'application',
             'article' => 'article',
           ),
         ),
@@ -476,7 +477,7 @@ function lds_article_feature_field_default_fields() {
       ),
       'entity_type' => 'node',
       'field_name' => 'field_note',
-      'label' => 'Note',
+      'label' => 'Note (obsolète)',
       'required' => 0,
       'settings' => array(
         'max' => '5',
@@ -490,7 +491,7 @@ function lds_article_feature_field_default_fields() {
         'module' => 'number',
         'settings' => array(),
         'type' => 'number',
-        'weight' => '8',
+        'weight' => '10',
       ),
     ),
   );
@@ -520,14 +521,14 @@ function lds_article_feature_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'fivestar',
           'settings' => array(
             'expose' => TRUE,
             'style' => 'average',
             'text' => 'none',
             'widget' => array(
-              'fivestar_widget' => 'default',
+              'fivestar_widget' => 'sites/all/modules/contrib/fivestar/widgets/craft/craft.css',
             ),
           ),
           'type' => 'fivestar_formatter_default',
@@ -548,7 +549,7 @@ function lds_article_feature_field_default_fields() {
       ),
       'entity_type' => 'node',
       'field_name' => 'field_rating',
-      'label' => 'Rating',
+      'label' => 'Note',
       'required' => 0,
       'settings' => array(
         'allow_clear' => 0,
@@ -565,7 +566,7 @@ function lds_article_feature_field_default_fields() {
           ),
         ),
         'type' => 'stars',
-        'weight' => '10',
+        'weight' => '8',
       ),
     ),
   );
@@ -733,9 +734,9 @@ function lds_article_feature_field_default_fields() {
   t('Editeur');
   t('Image');
   t('Note');
+  t('Note (obsolète)');
   t('Note sur 5');
   t('Parution');
-  t('Rating');
   t('Saisissez une liste de mots séparés par des virgules pour décrire votre contenu.');
   t('Tags');
   t('Transférer une image pour accompagner cet article.');

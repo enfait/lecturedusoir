@@ -105,7 +105,7 @@ function lds_article_feature_strongarm() {
       'display' => array(
         'references_entity_view_1' => array(
           'default' => array(
-            'weight' => '18',
+            'weight' => '17',
             'visible' => FALSE,
           ),
         ),

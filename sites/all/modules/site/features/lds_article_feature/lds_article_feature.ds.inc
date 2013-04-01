@@ -17,11 +17,6 @@ function lds_article_feature_ds_field_settings_info() {
   $ds_fieldsetting->bundle = 'article';
   $ds_fieldsetting->view_mode = 'default';
   $ds_fieldsetting->settings = array(
-    'note_starred' => array(
-      'weight' => '6',
-      'label' => 'inline',
-      'format' => 'default',
-    ),
     'links' => array(
       'weight' => '10',
       'label' => 'hidden',
@@ -124,11 +119,10 @@ function lds_article_feature_ds_layout_settings_info() {
         3 => 'field_author',
         4 => 'field_editor',
         5 => 'field_release',
-        6 => 'note_starred',
-        7 => 'field_rating',
-        8 => 'field_articles',
-        9 => 'field_tags',
-        10 => 'links',
+        6 => 'field_rating',
+        7 => 'field_articles',
+        8 => 'field_tags',
+        9 => 'links',
       ),
     ),
     'fields' => array(
@@ -138,7 +132,6 @@ function lds_article_feature_ds_layout_settings_info() {
       'field_author' => 'ds_content',
       'field_editor' => 'ds_content',
       'field_release' => 'ds_content',
-      'note_starred' => 'ds_content',
       'field_rating' => 'ds_content',
       'field_articles' => 'ds_content',
       'field_tags' => 'ds_content',
