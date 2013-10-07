@@ -1,21 +1,4 @@
 <?php
-
-function best_responsive_preprocess_field(&$variables) {
-
-  if ($variables['element']['#field_type'] == 'fivestar') {
-
-    foreach($variables['items'] as $key => &$item){
-      if( $item['average']['#rating'] == 0){
-        $variables['label_hidden'] = TRUE;
-        unset($variables['items'][$key]);
-      }
-    }
-
-
-  }
-
-}
-
 /**
  * Implements hook_html_head_alter().
  * This will overwrite the default meta character type tag with HTML5 version.

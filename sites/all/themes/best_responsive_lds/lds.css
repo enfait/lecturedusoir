@@ -1,0 +1,29 @@
+#logo h1 a, #logo h2 a {
+  padding: 40px 10px 40px 40px;
+}
+
+.flexslider-container {
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  height: 200px;
+  overflow: hidden;
+}
+
+.flexslider-container:hover {
+  height: 436px;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.field-name-field-tags a{
+  background: transparent;
+  margin-right: 5px;
+  color: #E73420;
+}
+
+.field-name-post-date {
+	text-align: right;
+	font-size:0.9em;
+}

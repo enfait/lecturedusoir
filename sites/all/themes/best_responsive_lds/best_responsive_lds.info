@@ -1,13 +1,11 @@
-name = Best Responsive
-description = Best Responsive is a premium Drupal 7 theme. Developed by <a href="http://www.devsaran.com">Devsaran.com</a>.
+name = Lecture du soir
 core = 7.x
-engine = phptemplate
-stylesheets[all][] = style.css
-stylesheets[all][] = css/responsive.css
-scripts[] = js/uniform.js
-scripts[] = js/superfish.js
-scripts[] = js/initialize.js
-scripts[] = js/responsive.js
+base theme = best_responsive
+
+
+stylesheets[all][] = lds.css
+stylesheets[all][] = css/article.css
+
 regions[sidebar_first]  = First Sidebar
 regions[header]         = Header
 regions[preface_first]  = Preface First
@@ -36,10 +34,3 @@ settings[facebook_url]  = "http://www.facebook.com/devsaran.drupal"
 settings[twitter_url]  = "http://www.twitter.com/saranquardz"
 settings[google_plus_url]  = "https://plus.google.com/u/0/109064032428497406718"
 settings[pinterest_url]  = "http://pinterest.com"
-
-; Information added by drupal.org packaging script on 2013-09-02
-version = "7.x-1.2"
-core = "7.x"
-project = "best_responsive"
-datestamp = "1378142476"
-

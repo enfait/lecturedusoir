@@ -125,9 +125,7 @@
       <div class="flexslider-container">
         <div id="single-post-slider" class="flexslider">
           <ul class="slides">
-            <li class="slide"><img src="<?php print base_path() . drupal_get_path('theme', 'best_responsive') . '/images/slide-image-1.jpg'; ?>" alt="Slide"/></li>
-            <li class="slide"><img src="<?php print base_path() . drupal_get_path('theme', 'best_responsive') . '/images/slide-image-2.jpg'; ?>" alt="Slide"/></li>
-            <li class="slide"><img src="<?php print base_path() . drupal_get_path('theme', 'best_responsive') . '/images/slide-image-3.jpg'; ?>" alt="Slide"/></li>
+            <li class="slide"><img src="<?php print base_path() . drupal_get_path('theme', 'best_responsive_lds') . '/images/slide-image-1.jpg'; ?>" alt="Slide"/></li>
           </ul><!-- /slides -->
         </div><!-- /flexslider -->
       </div>
@@ -206,6 +204,6 @@
   <?php endif; ?>
 
   <div id="copyright">
-    <?php print t('Copyright'); ?> &copy; <?php echo date("Y"); ?>, <a href="<?php print $front_page; ?>"><?php print $site_name; ?></a>. <?php print t('Theme by'); ?>  <a href="http://www.devsaran.com" target="_blank">Devsaran</a>
+    <?php print t('Copyright'); ?> &copy; <?php echo date("Y"); ?>, <a href="<?php print $front_page; ?>"><?php print $site_name; ?></a>.
   </div>
 </div>

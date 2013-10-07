@@ -361,7 +361,7 @@ a:focus {
   margin: 0px;
   text-decoration: none;
   color: #fff;
-  padding: 40px 10px 40px 40px;
+  padding: 40px 10px;
   text-transform: uppercase;
   letter-spacing: 1px;
   -moz-box-sizing: border-box;
@@ -636,19 +636,6 @@ html[xmlns] .slides {
 /*main*/
 .flexslider-container {
   position: relative;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-  height: 200px;
-   overflow: hidden;
-
-}
-
-.flexslider-container:hover {
-  height: 436px;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  transition: all 0.5s ease;
 }
 
 .flexslider {
@@ -1303,10 +1290,11 @@ ul.inline, ul.links.inline {
 }
 
 .field-name-field-tags a{
+  background: #e73420;
   margin-right: 5px;
   margin-bottom: 5px;
   border-radius: 2px;
-  color: #E73420;
+  color: #fff;
   font-size: 0.929em;
   padding: 2px 6px;
 }
@@ -1453,8 +1441,3 @@ border-left: 1px solid; border-right: 1px solid; height: 40px; margin-left: -36p
   font-size: 16px;
 }
 
-
-.field-name-post-date {
-	text-align: right;
-	font-size:0.9em;
-}
