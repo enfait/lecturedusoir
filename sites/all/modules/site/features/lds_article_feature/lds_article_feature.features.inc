@@ -45,6 +45,7 @@ function lds_article_feature_image_default_styles() {
         'weight' => '1',
       ),
     ),
+    'label' => 'article-normal',
   );
 
   // Exported image style: article-teaser.
@@ -67,6 +68,7 @@ function lds_article_feature_image_default_styles() {
         'weight' => '1',
       ),
     ),
+    'label' => 'article-teaser',
   );
 
   return $styles;

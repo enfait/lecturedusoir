@@ -18,7 +18,12 @@ function lds_article_feature_ds_field_settings_info() {
   $ds_fieldsetting->view_mode = 'default';
   $ds_fieldsetting->settings = array(
     'links' => array(
-      'weight' => '10',
+      'weight' => '9',
+      'label' => 'hidden',
+      'format' => 'default',
+    ),
+    'comments' => array(
+      'weight' => '11',
       'label' => 'hidden',
       'format' => 'default',
     ),
@@ -26,6 +31,11 @@ function lds_article_feature_ds_field_settings_info() {
       'weight' => '1',
       'label' => 'hidden',
       'format' => 'ds_post_date_teaser_date',
+    ),
+    'service_links_displays_group' => array(
+      'weight' => '10',
+      'label' => 'hidden',
+      'format' => 'sld_group_image_and_text',
     ),
   );
   $export['node|article|default'] = $ds_fieldsetting;
@@ -123,6 +133,8 @@ function lds_article_feature_ds_layout_settings_info() {
         7 => 'field_articles',
         8 => 'field_tags',
         9 => 'links',
+        10 => 'service_links_displays_group',
+        11 => 'comments',
       ),
     ),
     'fields' => array(
@@ -136,6 +148,8 @@ function lds_article_feature_ds_layout_settings_info() {
       'field_articles' => 'ds_content',
       'field_tags' => 'ds_content',
       'links' => 'ds_content',
+      'service_links_displays_group' => 'ds_content',
+      'comments' => 'ds_content',
     ),
     'classes' => array(),
     'wrappers' => array(
@@ -144,6 +158,8 @@ function lds_article_feature_ds_layout_settings_info() {
     'layout_wrapper' => 'div',
     'layout_attributes' => '',
     'layout_attributes_merge' => 0,
+    'layout_link_attribute' => '',
+    'layout_link_custom' => '',
   );
   $export['node|article|default'] = $ds_layout;
 

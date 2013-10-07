@@ -144,7 +144,7 @@ function lds_article_feature_field_default_fields() {
             'view_mode' => 'reference',
           ),
           'type' => 'entityreference_entity_view',
-          'weight' => '8',
+          'weight' => '7',
         ),
         'reference' => array(
           'label' => 'above',
@@ -457,7 +457,7 @@ function lds_article_feature_field_default_fields() {
           'label' => 'inline',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '19',
+          'weight' => '20',
         ),
         'reference' => array(
           'label' => 'inline',
@@ -529,7 +529,7 @@ function lds_article_feature_field_default_fields() {
             ),
           ),
           'type' => 'fivestar_formatter_default',
-          'weight' => '7',
+          'weight' => '6',
         ),
         'reference' => array(
           'label' => 'above',
@@ -688,7 +688,7 @@ function lds_article_feature_field_default_fields() {
           'module' => 'taxonomy',
           'settings' => array(),
           'type' => 'taxonomy_term_reference_link',
-          'weight' => '9',
+          'weight' => '8',
         ),
         'reference' => array(
           'label' => 'inline',

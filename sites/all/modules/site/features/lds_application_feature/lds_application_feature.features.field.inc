@@ -311,7 +311,7 @@ function lds_application_feature_field_default_fields() {
           'weight' => '0',
         ),
         'teaser' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
             'image_link' => 'content',
