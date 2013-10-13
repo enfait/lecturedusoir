@@ -41,3 +41,15 @@
 .field-name-field-articles .field-item {
   float: left;
 }
+
+.field-name-field-tags > .field-items > .field-item {
+  float: left;
+}
+
+.field-name-field-tags:after {
+  clear: left;
+  content: ".";
+  height: 0;
+  line-height: 0;
+  visibility: hidden;
+}
