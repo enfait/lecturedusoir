@@ -1,5 +1,13 @@
-#logo h1 a, #logo h2 a {
-  padding: 40px 10px 40px 40px;
+@media only screen and (min-width: 960px) {
+  #logo h1 a, #logo h2 a {
+    padding: 40px 10px 40px 40px;
+  }
+}
+
+@media only screen and (max-width: 959px) {
+  #logo h1, #logo h2 {
+    font-size: 1.714em;
+  }
 }
 
 .flexslider-container {
