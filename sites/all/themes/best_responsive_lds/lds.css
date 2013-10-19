@@ -2,27 +2,27 @@
   #logo h1 a, #logo h2 a {
     padding: 40px 10px 40px 40px;
   }
+
+  .flexslider-container {
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    height: 200px;
+    overflow: hidden;
+  }
+
+  .flexslider-container:hover {
+    height: 436px;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+  }
 }
 
 @media only screen and (max-width: 959px) {
   #logo h1, #logo h2 {
     font-size: 1.714em;
   }
-}
-
-.flexslider-container {
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-  height: 200px;
-  overflow: hidden;
-}
-
-.flexslider-container:hover {
-  height: 436px;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  transition: all 0.5s ease;
 }
 
 .field-name-field-tags a{
