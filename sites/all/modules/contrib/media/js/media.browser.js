@@ -26,8 +26,7 @@ Drupal.behaviors.MediaBrowser = {
     // Instantiate the tabs.
     $('#media-browser-tabset').tabs({
       // Ensure that the modal resizes to the content on each tab switch.
-      show: Drupal.media.browser.resizeIframe, // jquery ui < 1.8
-      activate: Drupal.media.browser.resizeIframe // jquery ui >= 1.8
+      show: Drupal.media.browser.resizeIframe
     });
 
     $('.ui-tabs-nav li').mouseup(function() {
@@ -126,35 +125,16 @@ Drupal.media.browser.selectErrorTab = function() {
     // Find the index of the tab
     var index = $('#media-browser-tabset a').index(tab);
     // Select the tab
-    Drupal.media.browser.selectTab(index);
+    $('#media-browser-tabset').tabs('select', index)
   }
 }
 
 Drupal.media.browser.selectActiveTab = function() {
   // Find the index of the last active tab.
   setTimeout(function() {
-    Drupal.media.browser.selectTab(Drupal.media.browser.activeTab);
+    $('#media-browser-tabset').tabs('select', Drupal.media.browser.activeTab);
     Drupal.media.browser.resizeIframe();
   }, 10);
-};
-
-/**
- * Helper function to change the media browser jQuery UI tabs
- * since it requires two different methods dependingon the version.
- */
-Drupal.media.browser.selectTab = function(index) {
-  var ver = jQuery.ui.version.split('.');
-  if (ver[0] == '1' && parseInt(ver[1]) <= 8) {
-    // jQuery UI <= 1.8
-    $('#media-browser-tabset').tabs('select', index);
-  }
-  else {
-    // jQuery UI 1.9+
-    $('#media-browser-tabset').tabs('option', 'active', index);
-  }
-
-  // Update the active tab variable.
-  Drupal.media.browser.activeTab = index;
 };
 
 }(jQuery));

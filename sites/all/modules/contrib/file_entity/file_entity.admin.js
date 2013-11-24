@@ -1,3 +1,4 @@
+
 (function ($) {
 
 Drupal.behaviors.fileDisplayStatus = {

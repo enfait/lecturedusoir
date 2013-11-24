@@ -295,22 +295,21 @@ abstract class Mollom {
     // Send the request to the server.
     $server = 'http://' . $this->server;
     $max_attempts = $this->requestMaxAttempts;
-    while ($max_attempts-- > 0) {
+    while ($max_attempts--) {
       try {
         $result = $this->handleRequest($method, $server, $path, $data, $expected);
       }
       catch (MollomBadRequestException $e) {
-        // Irrecoverable error, so don't try further.
+        // This is an irrecoverable error, so don't try further.
         break;
       }
       catch (MollomAuthenticationException $e) {
-        // Irrecoverable error, so don't try further.
+        // This is an irrecoverable error, so don't try further.
         break;
       }
       catch (MollomException $e) {
-        // If the requested resource does not exist, or the request was
-        // malformed, there is no point in trying further.
-        if ($e->getCode() >= 400 && $e->getCode() < 500) {
+        // If the resource does not exist, there is no point in trying further.
+        if ($e->getCode() === 404) {
           break;
         }
       }
@@ -353,14 +352,19 @@ abstract class Mollom {
     if ($this->lastResponseCode === self::RESPONSE_ERROR) {
       return $this->lastResponseCode;
     }
+    // Return a request error, which always requires to take client-side
+    // measures to resolve the problem.
+    if ($this->lastResponseCode === self::REQUEST_ERROR) {
+      return $this->lastResponseCode;
+    }
     // Return an authentication error, which may require special client-side
     // processing.
     if ($this->lastResponseCode === self::AUTH_ERROR) {
       return $this->lastResponseCode;
     }
-    // Return a request error, which always requires client-side measures to
-    // resolve the problem.
-    if ($this->lastResponseCode >= self::REQUEST_ERROR && $this->lastResponseCode < 500) {
+    // Return a not found error, which always needs to be handled by the calling
+    // code.
+    if ($this->lastResponseCode === 404) {
       return $this->lastResponseCode;
     }
 
@@ -406,7 +410,6 @@ abstract class Mollom {
    * @see json_decode()
    */
   protected function handleRequest($method, $server, $path, $data, $expected = array()) {
-    $time_start = microtime(TRUE);
     if (!empty($this->publicKey) && !empty($this->privateKey)) {
       // @todo Move into class property.
       $headers['Accept'] = 'application/xml, application/json;q=0.8, */*;q=0.5';
@@ -432,7 +435,6 @@ abstract class Mollom {
       $response->isError = TRUE;
       $response->body = NULL;
     }
-    $time_stop = microtime(TRUE);
 
     // Parse the response body string into an array.
     $response->data = array();
@@ -486,7 +488,6 @@ abstract class Mollom {
       'response_code' => $response->code,
       'response_message' => $response->message,
       'response' => !empty($response->data) ? $response->data : $response->body,
-      'response_time' => $time_stop - $time_start,
     );
     if ($response->isError) {
       if ($response->code <= 0) {

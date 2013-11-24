@@ -59,7 +59,7 @@ function hook_file_default_types_alter(&$types) {
 /**
  * Define file formatters.
  *
- * @return array
+ * @return
  *   An array whose keys are file formatter names and whose values are arrays
  *   describing the formatter.
  *
@@ -74,7 +74,7 @@ function hook_file_formatter_info() {
 /**
  * Perform alterations on file formatters.
  *
- * @param array $info
+ * @param $info
  *   Array of information on file formatters exposed by
  *   hook_file_formatter_info() implementations.
  */
@@ -129,7 +129,7 @@ function hook_file_view_alter($build, $type) {
  * callback function receives one initial argument, which is an array of the
  * checked files.
  *
- * @return array
+ * @return
  *   An array of operations. Each operation is an associative array that may
  *   contain the following key-value pairs:
  *   - 'label': Required. The label for the operation, displayed in the dropdown
@@ -164,21 +164,21 @@ function hook_file_operations() {
  * block access, return FILE_ENTITY_ACCESS_IGNORE or simply return nothing.
  * Blindly returning FALSE will break other file access modules.
  *
- * @param string $op
+ * @param $op
  *   The operation to be performed. Possible values:
  *   - "create"
  *   - "delete"
  *   - "update"
  *   - "view"
  *   - "download"
- * @param object $file
+ * @param $file
  *   The file on which the operation is to be performed, or, if it does
  *   not yet exist, the type of file to be created.
- * @param object $account
+ * @param $account
  *   A user object representing the user for whom the operation is to be
  *   performed.
  *
- * @return string|NULL
+ * @return
  *   FILE_ENTITY_ACCESS_ALLOW if the operation is to be allowed;
  *   FILE_ENTITY_ACCESS_DENY if the operation is to be denied;
  *   FILE_ENTITY_ACCESS_IGNORE to not affect this operation at all.
@@ -200,7 +200,7 @@ function hook_file_entity_access($op, $file, $account) {
 /**
  * Control access to listings of files.
  *
- * @param object $query
+ * @param $query
  *   A query object describing the composite parts of a SQL query related to
  *   listing files.
  *
@@ -218,7 +218,7 @@ function hook_query_file_entity_access_alter(QueryAlterableInterface $query) {
  * This hook is invoked from file_entity_search_execute(), after file_load()
  * and file_view() have been called.
  *
- * @param object $file
+ * @param $file
  *   The file being displayed in a search result.
  *
  * @return array
@@ -233,9 +233,7 @@ function hook_query_file_entity_access_alter(QueryAlterableInterface $query) {
  */
 function hook_file_entity_search_result($file) {
   $file_usage_count = db_query('SELECT count FROM {file_usage} WHERE fid = :fid', array('fid' => $file->fid))->fetchField();
-  return array(
-    'file_usage_count' => format_plural($file_usage_count, '1 use', '@count uses'),
-  );
+  return array('file_usage_count' => format_plural($file_usage_count, '1 use', '@count uses'));
 }
 
 /**
@@ -244,7 +242,7 @@ function hook_file_entity_search_result($file) {
  * This hook is invoked during search indexing, after file_load(), and after
  * the result of file_view() is added as $file->rendered to the file object.
  *
- * @param object $file
+ * @param $file
  *   The file being indexed.
  *
  * @return string
@@ -282,7 +280,7 @@ function hook_file_update_index($file) {
  * and then the weighted scores from all ranking mechanisms are added, which
  * brings about the same result as a weighted average.
  *
- * @return array
+ * @return
  *   An associative array of ranking data. The keys should be strings,
  *   corresponding to the internal name of the ranking mechanism, such as
  *   'recent', or 'usage'. The values should be arrays themselves, with the
@@ -311,11 +309,11 @@ function hook_file_ranking() {
     return array(
       'vote_average' => array(
         'title' => t('Average vote'),
-        // Note that we use i.sid, the search index's search item id, rather
-        // than fm.fid.
+        // Note that we use i.sid, the search index's search item id, rather than
+        // fm.fid.
         'join' => 'LEFT JOIN {vote_file_data} vote_file_data ON vote_file_data.fid = i.sid',
-        // The highest possible score should be 1,
-        // and the lowest possible score, always 0, should be 0.
+        // The highest possible score should be 1, and the lowest possible score,
+        // always 0, should be 0.
         'score' => 'vote_file_data.average / CAST(%f AS DECIMAL)',
         // Pass in the highest possible voting score as a decimal argument.
         'arguments' => array(variable_get('vote_score_max', 5)),
@@ -327,9 +325,9 @@ function hook_file_ranking() {
 /**
  * Alter file download headers.
  *
- * @param array $headers
+ * @param $headers
  *   Array of download headers.
- * @param object $file
+ * @param $file
  *   File object.
  */
 function hook_file_download_headers_alter(array &$headers, $file) {
@@ -341,10 +339,10 @@ function hook_file_download_headers_alter(array &$headers, $file) {
 /**
  * Decides which file type (bundle) should be assigned to a file entity.
  *
- * @param object $file
+ * @param $file
  *   File object.
  *
- * @return array
+ * @return
  *   Array of file type machine names that can be assigned to a given file type.
  *   If there are more proposed file types the one, that was returned the first,
  *   wil be chosen. This can be, however, changed in alter hook.
@@ -361,9 +359,9 @@ function hook_file_type($file) {
 /**
  * Alters list of file types that can be assigned to a file.
  *
- * @param array $types
+ * @param $types
  *   List of proposed types.
- * @param object $file
+ * @param $file
  *   File object.
  */
 function hook_file_type_alter(&$types, $file) {
@@ -371,26 +369,10 @@ function hook_file_type_alter(&$types, $file) {
   $types = array($types[4]);
 }
 
-/**
- * Provides metadata information.
- *
- * @todo Add documentation.
- *
- * @return array
- *   An array of metadata information.
- */
 function hook_file_metadata_info() {
 
 }
 
-/**
- * Alters metadata information.
- *
- * @todo Add documentation.
- *
- * @return array
- *   an array of metadata information.
- */
 function hook_file_metadata_info_alter() {
 
 }
