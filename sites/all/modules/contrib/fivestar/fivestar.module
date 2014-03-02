@@ -35,15 +35,27 @@ function fivestar_menu() {
     'type'              => MENU_NORMAL_ITEM,
     'file'              => 'includes/fivestar.admin.inc',
   );
-  $items['fivestar/preview/color'] = array(
-    'page callback'     => 'fivestar_preview_color',
-    'access callback'   => 'user_access',
-    'access arguments'  => array('administer site configuration'),
-    'type'              => MENU_CALLBACK,
-    'file'              => 'includes/fivestar.color.inc',
-  );
 
   return $items;
+}
+
+/**
+ * Implements hook_microdata_suggestions().
+ */
+function fivestar_microdata_suggestions() {
+  $mappings = array();
+
+  // Add the review mapping for Schema.org
+  $mappings['fields']['fivestar']['schema.org'] = array(
+    '#itemprop' => array('aggregateRating'),
+    '#is_item' => TRUE,
+    '#itemtype' => array('http://schema.org/AggregateRating'),
+    'average_rating' => array(
+      '#itemprop' => array('ratingValue'),
+    ),
+  );
+
+  return $mappings;
 }
 
 /**
@@ -159,7 +171,7 @@ function _fivestar_cast_vote($entity_type, $id, $value, $tag = NULL, $uid = NULL
     }
 
     // Moving the calculationg after saving/deleting the vote but before getting the votes.
-    votingapi_recalculate_results($entity_type, $id);    
+    votingapi_recalculate_results($entity_type, $id);
     return fivestar_get_votes($entity_type, $id, $tag, $uid);
   }
 }
@@ -287,17 +299,43 @@ function fivestar_validate_target($entity_type, $id, $tag, $uid = NULL) {
 function fivestar_fivestar_access($entity_type, $id, $tag, $uid) {
   // Check to see if there is a field instance on this entity.
   $fields = field_read_fields(array('module' => 'fivestar'));
-  foreach($fields as $field) {
+  foreach ($fields as $field) {
     if ($field['settings']['axis'] == $tag) {
       $params = array(
         'entity_type' => $entity_type,
         'field_name' => $field['field_name'],
       );
       $instance = field_read_instances($params);
-      if(!empty($instance)) {
+      if (!empty($instance)) {
         return TRUE;
       }
     }
+  }
+}
+
+/**
+ * Implementation of hook_form_comment_form_alter().
+ *
+ * This hook removes the parent node, together with the fivestar field, from
+ * the comment preview page. If this is left in, when the user presses the
+ * "Save" button after the preview page has been displayed, the fivestar widget
+ * gets the input rather than the comment; the user's input is lost. Based on a
+ * suggestion by ChristianAdamski in issue 1289832-3.
+ */
+function fivestar_form_comment_form_alter(&$form, &$form_state, $form_id) {
+  $is_fivestar = FALSE;
+  if (isset($form['comment_output_below'])) {
+    foreach($form['comment_output_below'] as $key => $value) {
+      if (is_array($value) && !empty($value['#field_type'])) {
+        if ($value['#field_type'] =='fivestar') {
+          $is_fivestar = TRUE;
+          $fivestar_key = $key;
+        }
+      }
+    }
+  }
+  if ($is_fivestar) {
+    unset($form['comment_output_below'][$fivestar_key]);
   }
 }
 
@@ -315,7 +353,7 @@ function fivestar_fivestar_access($entity_type, $id, $tag, $uid) {
 function fivestar_fivestar_widgets() {
   $files = &drupal_static(__FUNCTION__);
   if (!isset($files)) {
-    $widgets_directory = drupal_get_path('module', 'fivestar') .'/widgets';
+    $widgets_directory = drupal_get_path('module', 'fivestar') . '/widgets';
     $files = file_scan_directory($widgets_directory, '/\.css$/');
   }
   $widgets = array();
@@ -377,6 +415,7 @@ function fivestar_custom_widget($form, &$form_state, $values, $settings) {
     '#widget' => isset($settings['widget']) ? $settings['widget'] : array('name' => 'default', 'css' => 'default'),
     '#values' => $values,
     '#settings' => $settings,
+    '#description' => $settings['description'],
   );
 
   $form['fivestar_submit'] = array(
@@ -408,8 +447,11 @@ function fivestar_form_submit($form, &$form_state) {
  * AJAX submit handler for fivestar_custom_widget
  */
 function fivestar_ajax_submit($form, $form_state) {
-  _fivestar_update_field_value($form_state['settings']['content_type'], $form_state['settings']['entity'], $form_state['settings']['field_name'], $form_state['settings']['langcode'], $form_state['values']['vote']);
-  $votes = _fivestar_cast_vote($form_state['settings']['content_type'], $form_state['settings']['content_id'], $form_state['values']['vote'], $form_state['settings']['tag']);
+  if (!empty($form_state['settings']['content_id'])) {
+    _fivestar_update_field_value($form_state['settings']['content_type'], $form_state['settings']['entity'], $form_state['settings']['field_name'], $form_state['settings']['langcode'], $form_state['values']['vote']);
+    $votes = _fivestar_cast_vote($form_state['settings']['content_type'], $form_state['settings']['content_id'], $form_state['values']['vote'], $form_state['settings']['tag']);
+  }
+
 
   $values = array();
   $values['user'] = isset($votes['user']['value']) ? $votes['user']['value'] : 0;
@@ -491,14 +533,13 @@ function fivestar_expand($element) {
     '#options' => $options,
     '#required' => $element['#required'],
     '#theme' => 'fivestar_select',
+    '#attributes' => $element['#attributes'],
     '#default_value' => _fivestar_get_element_default_value($element),
+    '#weight' => -2,
   );
 
   if (isset($element['#parents'])) {
     $element['vote']['#parents'] = $element['#parents'];
-  }
-  if (isset($element['#weight'])) {
-    $element['vote']['#weight'] = $element['#weight'];
   }
 
   switch ($settings['text']) {
@@ -507,6 +548,7 @@ function fivestar_expand($element) {
         'user_rating' => $values['user'],
         'votes' => $settings['style'] == 'dual' ? NULL : $values['count'],
         'stars' => $settings['stars'],
+        'microdata' => $settings['microdata'],
       ));
       $class[] = 'fivestar-user-text';
       break;
@@ -515,6 +557,7 @@ function fivestar_expand($element) {
         'average_rating' => $values['average'],
         'votes' => $values['count'],
         'stars' => $settings['stars'],
+        'microdata' => $settings['microdata'],
       ));
       $class[] = 'fivestar-average-text';
       break;
@@ -524,6 +567,7 @@ function fivestar_expand($element) {
         'average_rating' => $values['user'] ? NULL : $values['average'],
         'votes' => $settings['style'] == 'dual' ? NULL : $values['count'],
         'stars' => $settings['stars'],
+        'microdata' => $settings['microdata'],
       ));
       $class[] = 'fivestar-smart-text';
       $class[] = $values['user'] ? 'fivestar-user-text' : 'fivestar-average-text';
@@ -534,6 +578,7 @@ function fivestar_expand($element) {
         'average_rating' => $settings['style'] == 'dual' ? NULL : $values['average'],
         'votes' => $settings['style'] == 'dual' ? NULL : $values['count'],
         'stars' => $settings['stars'],
+        'microdata' => $settings['microdata'],
       ));
       $class[] = ' fivestar-combo-text';
       break;
@@ -547,7 +592,7 @@ function fivestar_expand($element) {
       $class[] = 'fivestar-user-stars';
       break;
     case 'smart':
-      $class[] = 'fivestar-smart-stars '. ($values['user'] ? 'fivestar-user-stars' : 'fivestar-average-stars');
+      $class[] = 'fivestar-smart-stars ' . ($values['user'] ? 'fivestar-user-stars' : 'fivestar-average-stars');
       break;
     case 'dual':
       $class[] = 'fivestar-combo-stars';
@@ -667,7 +712,7 @@ function _fivestar_get_element_default_value($element) {
  */
 function fivestar_validate($element, &$form_state) {
   if ($element['#required'] && (empty($element['#value']) || $element['#value'] == '-')) {
-    form_error($element, t('!name field is required.', array('!name' => $element['#title'])));
+    form_error($element, t('@name field is required.', array('@name' => $element['#title'])));
   }
 }
 
@@ -690,13 +735,13 @@ function fivestar_get_tags() {
   $tags_exploded = explode(',', $tags_txt);
 
   $tags = array();
-  $got_vote = false;
+  $got_vote = FALSE;
   foreach ($tags_exploded as $tag) {
     $tag_trimmed = trim($tag);
     if ($tag_trimmed) {
       $tags[$tag_trimmed] = $tag_trimmed;
       if ($tag_trimmed == 'vote') {
-        $got_vote = true;
+        $got_vote = TRUE;
       }
     }
   }
@@ -750,6 +795,38 @@ function fivestar_fivestar_target_info($field, $instance) {
     }
   }
 
+  // Add entityreference support.
+  if (module_exists('entityreference')) {
+    $field_names = array_keys(field_read_fields(array('module' => 'entityreference')));
+    if (!empty($field_names)) {
+      $field_instances = field_read_instances(array('entity_type' => $entity_type, 'bundle' => $bundle, 'field_name' => $field_names));
+      if (!empty($field_instances)) {
+        foreach ($field_instances as $field_instance) {
+          $options[$field_instance['field_name']] = array(
+            'title' => t('Entity reference: @field', array('@field' => $field_instance['field_name'])),
+            'callback' => '_fivestar_target_entityreference'
+          );
+        }
+      }
+    }
+  }
+
+  // Add user reference support.
+  if (module_exists('user_reference')) {
+    $field_names = array_keys(field_read_fields(array('module' => 'user_reference')));
+    if (!empty($field_names)) {
+      $field_instances = field_read_instances(array('entity_type' => $entity_type, 'bundle' => $bundle, 'field_name' => $field_names));
+      if (!empty($field_instances)) {
+        foreach ($field_instances as $field_instance) {
+          $options[$field_instance['field_name']] = array(
+            'title' => t('User reference: @field', array('@field' => $field_instance['field_name'])),
+            'callback' => '_fivestar_target_user_reference'
+          );
+        }
+      }
+    }
+  }
+
   // Add comment module support.
   if ($instance['entity_type'] == 'comment') {
     $options['parent_node'] = array(
@@ -763,7 +840,8 @@ function fivestar_fivestar_target_info($field, $instance) {
 
 /**
  *
- * @return (array) array('entity_type', 'entity_id')
+ * @return array
+ *   array('entity_type', 'entity_id').
  */
 function _fivestar_target_node_reference($entity, $field, $instance, $langcode) {
   $target = array();
@@ -772,6 +850,42 @@ function _fivestar_target_node_reference($entity, $field, $instance, $langcode) 
   if (isset($entity->{$node_reference}[$langcode][0]) && is_numeric($entity->{$node_reference}[$langcode][0]['nid'])) {
     $target['entity_id'] = $entity->{$node_reference}[$langcode][0]['nid'];
     $target['entity_type'] = 'node';
+  }
+
+  return $target;
+}
+
+/**
+ * @return (array) array('entity_type', 'entity_id')
+ */
+function _fivestar_target_entityreference($entity, $field, $instance, $langcode) {
+  $target = array();
+
+  $entityreference = $instance['settings']['target'];
+
+  // Retrieve entity settings for the referenced field.
+  $field_info = field_info_field($entityreference);
+
+  if (isset($entity->{$entityreference}[$langcode][0]) && isset($entity->{$entityreference}[$langcode][0]['target_id']) && is_numeric($entity->{$entityreference}[$langcode][0]['target_id'])) {
+    $target['entity_id'] = $entity->{$entityreference}[$langcode][0]['target_id'];
+    $target['entity_type'] = $field_info['settings']['target_type'];
+  }
+
+  return $target;
+}
+
+/**
+ *
+ * @return array
+ *   array('entity_type', 'entity_id').
+ */
+function _fivestar_target_user_reference($entity, $field, $instance, $langcode) {
+  $target = array();
+
+  $user_reference = $instance['settings']['target'];
+  if (isset($entity->{$user_reference}[$langcode][0]) && is_numeric($entity->{$user_reference}[$langcode][0]['uid'])) {
+    $target['entity_id'] = $entity->{$user_reference}[$langcode][0]['uid'];
+    $target['entity_type'] = 'user';
   }
 
   return $target;
