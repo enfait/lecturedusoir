@@ -15,4 +15,4 @@ mysql:
     MYSQL_PASSWORD: sg81erfg18f1z981
     MYSQL_DATABASE: drupal
   volumes:
-    - ./_fig/local/data/mysql:/var/lib/mysql
+    - ../lecturedusoir-drupal_fig/mysql:/var/lib/mysql
