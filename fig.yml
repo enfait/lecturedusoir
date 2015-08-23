@@ -1,0 +1,18 @@
+web:
+  build: _fig/web
+  ports:
+    - 5000:80
+  volumes:
+    - .:/project
+  links:
+    - mysql:mysql
+
+mysql:
+  image: mysql:5.6
+  environment:
+    MYSQL_ROOT_PASSWORD: fq1se8f1z9ef81ze98
+    MYSQL_USER: admin
+    MYSQL_PASSWORD: sg81erfg18f1z981
+    MYSQL_DATABASE: drupal
+  volumes:
+    - ./_fig/local/data/mysql:/var/lib/mysql
