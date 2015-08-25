@@ -53,3 +53,7 @@
   line-height: 0;
   visibility: hidden;
 }
+
+div.field-type-asin {
+  border: 0;
+}
