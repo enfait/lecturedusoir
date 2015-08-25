@@ -112,11 +112,11 @@ function lds_article_feature_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'inline',
+          'label' => 'hidden',
           'module' => 'asin',
           'settings' => array(),
           'type' => 'asin_inline',
-          'weight' => '8',
+          'weight' => '9',
         ),
         'reference' => array(
           'label' => 'above',
@@ -747,7 +747,7 @@ function lds_article_feature_field_default_fields() {
           'module' => 'taxonomy',
           'settings' => array(),
           'type' => 'taxonomy_term_reference_link',
-          'weight' => '9',
+          'weight' => '8',
         ),
         'reference' => array(
           'label' => 'inline',
