@@ -89,6 +89,65 @@ function lds_article_feature_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-article-field_amazon_product'.
+  $fields['node-article-field_amazon_product'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_amazon_product',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'locked' => '0',
+      'module' => 'asin',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'asin',
+    ),
+    'field_instance' => array(
+      'bundle' => 'article',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'asin',
+          'settings' => array(),
+          'type' => 'asin_inline',
+          'weight' => '8',
+        ),
+        'reference' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '0',
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_amazon_product',
+      'label' => 'Acheter sur Amazon',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'asin',
+        'settings' => array(),
+        'type' => 'asin_text',
+        'weight' => '11',
+      ),
+    ),
+  );
+
   // Exported field: 'node-article-field_articles'.
   $fields['node-article-field_articles'] = array(
     'field_config' => array(
@@ -535,7 +594,7 @@ function lds_article_feature_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => 0,
+          'weight' => '0',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -688,7 +747,7 @@ function lds_article_feature_field_default_fields() {
           'module' => 'taxonomy',
           'settings' => array(),
           'type' => 'taxonomy_term_reference_link',
-          'weight' => '8',
+          'weight' => '9',
         ),
         'reference' => array(
           'label' => 'inline',
@@ -725,6 +784,7 @@ function lds_article_feature_field_default_fields() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Acheter sur Amazon');
   t('Articles');
   t('Auteur');
   t('Body');
